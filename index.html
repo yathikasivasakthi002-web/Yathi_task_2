@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym CRM</title>
+
+<style>
+
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0f172a;
+  color:white;
+}
+
+.container{
+  width:90%;
+  max-width:1000px;
+  margin:auto;
+  padding:20px;
+}
+
+h1{
+  text-align:center;
+  color:#38bdf8;
+}
+
+.cards{
+  display:flex;
+  gap:20px;
+  margin:20px 0;
+}
+
+.card{
+  flex:1;
+  background:#1e293b;
+  padding:20px;
+  border-radius:10px;
+  text-align:center;
+}
+
+.card h2{
+  color:#38bdf8;
+}
+
+form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:10px;
+  margin-bottom:20px;
+}
+
+input,select,button{
+  padding:10px;
+  border:none;
+  border-radius:5px;
+}
+
+button{
+  background:#38bdf8;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th{
+  background:#38bdf8;
+  color:black;
+}
+
+th,td{
+  padding:12px;
+  text-align:center;
+  border:1px solid #334155;
+}
+
+td{
+  background:#1e293b;
+}
+
+.deleteBtn{
+  background:red;
+  color:white;
+  padding:6px 10px;
+  border:none;
+  border-radius:5px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🏋 Gym CRM</h1>
+
+<div class="cards">
+
+<div class="card">
+<h2 id="total">0</h2>
+<p>Total Members</p>
+</div>
+
+<div class="card">
+<h2 id="active">0</h2>
+<p>Active Members</p>
+</div>
+
+<div class="card">
+<h2 id="expired">0</h2>
+<p>Expired Members</p>
+</div>
+
+</div>
+
+<form id="memberForm">
+
+<input type="text" id="name" placeholder="Member Name" required>
+
+<input type="number" id="age" placeholder="Age" required>
+
+<input type="text" id="phone" placeholder="Phone Number" required>
+
+<select id="plan">
+<option>1 Month</option>
+<option>3 Months</option>
+<option>6 Months</option>
+<option>1 Year</option>
+</select>
+
+<select id="status">
+<option>Active</option>
+<option>Expired</option>
+</select>
+
+<button type="submit">Add Member</button>
+
+</form>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+<th>Phone</th>
+<th>Plan</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="memberList"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const form = document.getElementById("memberForm");
+const memberList = document.getElementById("memberList");
+
+let total = 0;
+let active = 0;
+let expired = 0;
+
+form.addEventListener("submit", function(e){
+
+e.preventDefault();
+
+const name = document.getElementById("name").value;
+const age = document.getElementById("age").value;
+const phone = document.getElementById("phone").value;
+const plan = document.getElementById("plan").value;
+const status = document.getElementById("status").value;
+
+const row = document.createElement("tr");
+
+row.innerHTML = `
+<td>${name}</td>
+<td>${age}</td>
+<td>${phone}</td>
+<td>${plan}</td>
+<td>${status}</td>
+<td>
+<button class="deleteBtn">Delete</button>
+</td>
+`;
+
+memberList.appendChild(row);
+
+total++;
+
+if(status === "Active"){
+active++;
+}else{
+expired++;
+}
+
+updateCounts();
+
+form.reset();
+
+row.querySelector(".deleteBtn").addEventListener("click", function(){
+
+row.remove();
+
+total--;
+
+if(status === "Active"){
+active--;
+}else{
+expired--;
+}
+
+updateCounts();
+
+});
+
+});
+
+function updateCounts(){
+
+document.getElementById("total").innerText = total;
+document.getElementById("active").innerText = active;
+document.getElementById("expired").innerText = expired;
+
+}
+
+</script>
+
+</body>
+  </html>
