@@ -86,6 +86,15 @@ input[type="date"]{
   width:100%;
   font-size:15px;
   }
+#expiry{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:12px;
+  background:white;
+  color:black;
+  font-size:15px;
+}
 
 input:focus,
 select:focus{
